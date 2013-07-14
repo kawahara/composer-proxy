@@ -15,7 +15,9 @@ $app['repositories'] = array(
 $app['cache_dir'] = __DIR__.'/web/proxy';
 
 $app['browser'] = $app->share(function() {
-    return new Buzz\Browser();
+    $client = new Buzz\Client\Curl();
+
+    return new Buzz\Browser($client);
 });
 
 $app->get('/', function() use ($app) {
