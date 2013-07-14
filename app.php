@@ -4,9 +4,8 @@ require_once __DIR__.'/vendor/autoload.php';
 
 $app = new Silex\Application();
 
-$app['queue'] = true;
-$app['quque_host'] = 'localhost';
-$app['queue_port'] = 4000;
+$app['title'] = "Composer Proxy JP";
+$app['base_url'] = "http://composer-proxy.jp/";
 
 $app['repositories'] = array(
     'packagist' => 'https://packagist.org'
@@ -20,8 +19,14 @@ $app['browser'] = $app->share(function() {
     return new Buzz\Browser($client);
 });
 
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => __DIR__.'/views'
+));
+
 $app->get('/', function() use ($app) {
-    return "Hello";
+    return $app['twig']->render('index.html.twig', array(
+        'app' => $app
+    ));
 });
 
 $app->get('/proxy/{rep}/packages.json', function($rep) use ($app) {

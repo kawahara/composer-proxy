@@ -9,12 +9,14 @@
         }
     ],
     "require": {
+        "ext-curl": "*",
         "silex/silex": "1.*",
         "symfony/console": "2.3.*",
         "symfony/finder": "2.3.*",
         "symfony/filesystem": "2.3.*",
         "react/react": "0.3.*",
-        "kriswallsmith/buzz": "0.*"
+        "kriswallsmith/buzz": "0.*",
+        "twig/twig": ">=1.8,<2.0-dev"
     },
     "autoload": {
     }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ app.title }}</title>
+        <link href="//netdna.bootstrapcdn.com/bootswatch/2.3.2/cerulean/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body style="padding-top:80px">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></a>
+                    <a class="brand" href="#">{{ app.title }}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <header class="jumbotron subhead" id="overview">
+                <div class="row">
+                    <div class="span12">
+                        <h1>{{ app.title }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">
+                        <img src="/top.jpg" alt="Shikumi" style="box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.8);" />
+                    </div>
+                    <div class="span8">
+                        1. Setup your <em>$COMPOSER_HOME/config.json</em> (default = $HOME/.comopser/config.json).
+                        <pre><code>
+    "repositories": [
+        { "packagist": fase },
+        {
+            "type": "composer",
+            "url": "{{ app.base_url }}/proxy/packagist"
+        }
+    ]
+}</code></pre>
+                        2. Enjoy
+                    </div>
+                </div>
+            </header>
+        </div>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    </body>
+</html>
