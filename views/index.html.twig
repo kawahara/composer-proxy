@@ -30,10 +30,10 @@
                         1. Setup your <em>$COMPOSER_HOME/config.json</em> (default = $HOME/.comopser/config.json).
                         <pre><code>{
     "repositories": [
-        { "packagist": fase },
+        { "packagist": false },
         {
             "type": "composer",
-            "url": "{{ app.base_url }}/proxy/packagist"
+            "url": "{{ app.base_url }}proxy/packagist"
         }
     ]
 }</code></pre>
