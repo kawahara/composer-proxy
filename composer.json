@@ -1,0 +1,21 @@
+{
+    "name": "kawahara/composer-proxy",
+    "description": "The composer proxy",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shogo Kawahara",
+            "email": "kawahara@bucyou.net"
+        }
+    ],
+    "require": {
+        "silex/silex": "1.*",
+        "symfony/console": "2.3.*",
+        "symfony/finder": "2.3.*",
+        "symfony/filesystem": "2.3.*",
+        "react/react": "0.3.*",
+        "kriswallsmith/buzz": "0.*"
+    },
+    "autoload": {
+    }
+}
