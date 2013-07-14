@@ -17,6 +17,7 @@ $app['cache_dir'] = __DIR__.'/web/proxy';
 
 $app['browser'] = $app->share(function() {
     $client = new Buzz\Client\Curl();
+    $client->setTimeout(20);
 
     return new Buzz\Browser($client);
 });
@@ -51,6 +52,7 @@ $app->get('/proxy/{rep}/packages.json', function($rep) use ($app) {
 
     $responseJson = json_decode($response->getContent(), true);
 
+    // convert
     unset($responseJson['notify']);
     unset($responseJson['notify-batch']);
     unset($responseJson['search']);
@@ -80,7 +82,14 @@ $app->get('/proxy/{rep}/p/{p}${hash}.json', function($rep, $p, $hash) use ($app)
         $app->abort($response->getStatusCode(), "");
     }
 
-    $responseJson = json_decode($response->getContent(), true);
+    $contents = $response->getContent();
+    $gethash = hash('sha256', $contents, false);
+
+    if ($gethash != $hash) {
+        $app->abort(500, "Cannot fetch file correctly.");
+    }
+
+    $responseJson = json_decode($contents, true);
 
     $dir = $app['cache_dir']."/".$rep.$path;
     if (!is_dir($dir)) {
@@ -106,13 +115,22 @@ $app->get('/proxy/{rep}/p/{namespace}/{package}${hash}.json', function($rep, $na
         $app->abort($response->getStatusCode(), "");
     }
 
-    $responseJson = json_decode($response->getContent(), true);
+    $contents = $response->getContent();
+    $gethash = hash('sha256', $contents, false);
+
+    // Check hash
+    if ($gethash != $hash) {
+        $app->abort(500, "Cannot fetch file correctly.");
+    }
+
+    $responseJson = json_decode($contents, true);
 
     $dir = $app['cache_dir']."/".$rep.$path;
     if (!is_dir($dir)) {
         @mkdir($dir, 0777, true);
     }
 
+    // Save cache
     file_put_contents($dir.$file, json_encode($responseJson));
 
     return $app->json($responseJson);
