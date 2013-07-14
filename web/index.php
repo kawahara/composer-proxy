@@ -10,4 +10,9 @@ if (php_sapi_name() === 'cli-server') {
 
 $app = require(__DIR__."/../app.php");
 $app['debug'] = true;
-$app->run();
+
+if ($app['debug']) {
+    $app->run();
+} else {
+    $app['http_cache']->run();
+}

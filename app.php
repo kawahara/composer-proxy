@@ -2,6 +2,8 @@
 
 require_once __DIR__.'/vendor/autoload.php';
 
+use Symfony\Component\HttpFoundation\Response;
+
 $app = new Silex\Application();
 
 $app['title'] = "Composer Proxy JP";
@@ -19,14 +21,21 @@ $app['browser'] = $app->share(function() {
     return new Buzz\Browser($client);
 });
 
+$app->register(new Silex\Provider\HttpCacheServiceProvider(), array(
+    'http_cache.cache_dir' => __DIR__.'/cache/'
+));
+
+
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views'
 ));
 
 $app->get('/', function() use ($app) {
-    return $app['twig']->render('index.html.twig', array(
+    $body =  $app['twig']->render('index.html.twig', array(
         'app' => $app
     ));
+
+    return new Response($body, 200, array('Cache-Control' => 's-maxage=3600,public'));
 });
 
 $app->get('/proxy/{rep}/packages.json', function($rep) use ($app) {
