@@ -38,6 +38,7 @@ $app->get('/proxy/{rep}/packages.json', function($rep) use ($app) {
     unset($responseJson['notify']);
     unset($responseJson['notify-batch']);
     unset($responseJson['search']);
+    $responseJson['providers-url'] = "/proxy/".$rep."/p/%package%$%hash%.json";
 
     $dir = $app['cache_dir']."/".$rep;
     if (!is_dir($dir)) {
