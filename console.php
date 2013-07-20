@@ -21,7 +21,7 @@ $console
         new InputOption('ttl', 't', InputOption::VALUE_OPTIONAL, 'ttl', 300), // 5 minutes
         new InputOption('dry-run', null, InputOption::VALUE_NONE, ''),
         new InputOption('without-hashed-file', null, InputOption::VALUE_NONE, ''),
-        new InputOption('hashed-file-ttl', null, InputOption::VALUE_OPTIONAL, '', 60*60*24*6) //6 months
+        new InputOption('hashed-file-ttl', null, InputOption::VALUE_OPTIONAL, '', 60*60*24*30*6) //6 months
     ))
     ->setDescription('Clear old cache files')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
