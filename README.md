@@ -22,10 +22,12 @@ Clone it.
 
 Resolve dependencies with composer (See https://getcomposer.org/)
 
+    $ cd /path/to/app
     $ composer install
 
 Change permission for cache directories
 
+    $ cd /path/to/app
     $ chmod 777 cache
     $ chmod 777 web/proxy
 
