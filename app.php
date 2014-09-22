@@ -53,9 +53,16 @@ $app->get('/proxy/{rep}/packages.json', function($rep) use ($app) {
     $responseJson = json_decode($response->getContent(), true);
 
     // convert
-    unset($responseJson['notify']);
-    unset($responseJson['notify-batch']);
-    unset($responseJson['search']);
+    if (isset($responseJson['notify']) && $responseJson['notify'][0] === '/') {
+        $responseJson['notify'] = $app['repositories'][$rep] . $responseJson['notify'];
+    }
+    if (isset($responseJson['notify-batch']) && $responseJson['notify-batch'][0] === '/') {
+        $responseJson['notify-batch'] = $app['repositories'][$rep] . $responseJson['notify-batch'];
+    }
+    if (isset($responseJson['search']) && $responseJson['search'][0] === '/') {
+        $responseJson['search'] = $app['repositories'][$rep] . $responseJson['search'];
+    }
+
     $responseJson['providers-url'] = "/proxy/".$rep."/p/%package%$%hash%.json";
 
     $dir = $app['cache_dir']."/".$rep;
