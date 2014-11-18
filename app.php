@@ -39,6 +39,10 @@ $app->get('/', function() use ($app) {
     return new Response($body, 200, array('Cache-Control' => 's-maxage=3600,public'));
 });
 
+$app->get('/proxy/{rep}/', function($rep) use ($app) {
+    return $app->redirect("/proxy/${rep}/packages.json");
+});
+
 $app->get('/proxy/{rep}/packages.json', function($rep) use ($app) {
     if (!isset($app['repositories'][$rep])) {
         $app->abort(404, "Not Found");
