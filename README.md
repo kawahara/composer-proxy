@@ -31,12 +31,9 @@ Change permission for cache directories
     $ chmod 777 cache
     $ chmod 777 web/proxy
 
-Change configuration for application in `app.php`
+Copy configuration file and modify for your needs
 
-    # replace to your configuration
-    $app['title'] = "Composer Proxy JP";
-    $app['base_url'] = "http://composer-proxy.jp/";
-
+    cp config.ini.dist config.ini
 
 Example: Configure web server (Apache)
 
