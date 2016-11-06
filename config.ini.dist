@@ -1,2 +1,5 @@
 title="Composer Proxy JP"
 base_url="http://composer-proxy.jp/"
+
+; Additional repositories
+; repositories[packagist] = https://packagist.org
