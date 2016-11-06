@@ -9,19 +9,27 @@ $app = new Silex\Application();
 $app['title'] = "Composer Proxy JP";
 $app['base_url'] = "http://composer-proxy.jp/";
 
-$config_file = __DIR__ . '/config.ini';
-if (is_file($config_file)) {
-    $config = parse_ini_file($config_file);
-    foreach ($config as $key => $value) {
-        $app[$key] = $value;
-    }
-}
-
 $app['repositories'] = array(
     'packagist' => 'https://packagist.org'
 );
 
 $app['cache_dir'] = __DIR__.'/web/proxy';
+
+# Read additional configs from a "config.ini" file.
+# See config.ini.dist for an example.
+$config_file = __DIR__ . '/config.ini';
+if (is_file($config_file)) {
+    $config = parse_ini_file($config_file);
+    foreach ($config as $key => $value) {
+        if (is_array($value)) {
+            foreach ($value as $arr_key => $arr_value) {
+                $app[$key][$arr_key] = $arr_value;
+            }
+        } else {
+            $app[$key] = $value;
+        }
+    }
+}
 
 $app['browser'] = $app->share(function() {
     $client = new Buzz\Client\Curl();
